@@ -13,13 +13,16 @@
     --blue:#3f6b87; --blue-soft:#e6eef3;
     --amber:#9a6b16; --amber-soft:#fbe9c9;
   }
-  html,body{margin:0;padding:0}
+  html,body{margin:0;padding:0;background:#faf9f5}
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    color:var(--ink); width:210mm; height:297mm; padding:14mm 13mm 11mm;
-    background:#faf9f5; font-size:13px; line-height:1.5;
-    display:flex; flex-direction:column;
+    color:var(--ink); font-size:13px; line-height:1.5;
   }
+  .page{
+    width:210mm; height:297mm; padding:14mm 13mm 11mm;
+    display:flex; flex-direction:column; background:#faf9f5;
+  }
+  .page + .page{ page-break-before:always; }
 
   /* Header */
   .head{
@@ -85,9 +88,33 @@
     background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px;
   }
   .foot b{color:var(--green-d)}
+
+  /* Page 2 — recipes */
+  .protein-tip{
+    background:var(--green-soft); border:1px solid #d6e3d2; border-radius:12px;
+    padding:13px 16px; margin-bottom:14px; font-size:12.5px; line-height:1.55;
+  }
+  .protein-tip b{color:var(--green-d)}
+  .rgrid{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+  .rcard{border:1px solid var(--line); border-radius:14px; background:#fff; padding:16px 18px;
+    display:flex; flex-direction:column; break-inside:avoid}
+  .rcard.span{grid-column:1 / -1}
+  .rcard h3{margin:0 0 3px; font-size:15.5px}
+  .rcard .badges{display:flex; gap:7px; flex-wrap:wrap; margin:6px 0 9px}
+  .b{font-size:10.5px; font-weight:800; padding:3px 9px; border-radius:999px}
+  .b-p{background:var(--green-soft); color:var(--green)}
+  .b-t{background:var(--accent-soft); color:var(--accent)}
+  .b-s{background:var(--blue-soft); color:var(--blue)}
+  .rcard h4{margin:9px 0 3px; font-size:10.5px; letter-spacing:.5px; text-transform:uppercase; color:var(--muted)}
+  .rcard ul,.rcard ol{padding-left:18px}
+  .rcard li{margin:4px 0; font-size:12.5px}
+  .src{font-size:10.5px; color:var(--muted); margin-top:9px}
 </style>
 </head>
 <body>
+
+<!-- ============ PAGE 1 — THE PLAN ============ -->
+<div class="page">
 
   <div class="head">
     <div>
@@ -105,7 +132,6 @@
 
   <div class="grid">
 
-    <!-- Cold brew -->
     <div class="card">
       <h2>☕ <span class="lead">Cold Brew</span> <span class="tag t-amber">every day</span> <span class="hint">ready in ~12 hrs</span></h2>
       <ol>
@@ -115,7 +141,6 @@
       </ol>
     </div>
 
-    <!-- Cleaning -->
     <div class="card">
       <h2>🧹 <span class="lead">Cleaning</span> <span class="tag t-green">keep it basic</span></h2>
       <ul>
@@ -127,22 +152,21 @@
       <p class="note pad">That's it — nothing heavy 🙂</p>
     </div>
 
-    <!-- Breakfast -->
     <div class="card">
-      <h2>🌅 <span class="lead">Breakfast</span> <span class="tag t-green">batch &amp; freeze</span> <span class="hint">a few portions</span></h2>
+      <h2>🌅 <span class="lead">Breakfast</span> <span class="tag t-green">batch &amp; freeze</span> <span class="hint">recipes on p.2</span></h2>
       <div class="mini">
         <div class="r">
           <span class="nm">① Overnight Oats</span>
-          Rolled oats + <b>our soy protein</b> + soy/oat milk + chia. Mix, divide into jars, chill overnight. Top with fruit.
+          Rolled oats + <b>our soy protein</b> + soy milk + chia. Make a few jars at once.
         </div>
         <div class="r">
           <span class="nm">② Soy Protein Pudding (jelly)</span>
-          Soy milk + <b>our soy protein</b> + a little gelatin. Whisk smooth, pour into cups, chill until set.
+          Soy milk + <b>our soy protein</b> + a little gelatin. Set in cups overnight.
         </div>
       </div>
+      <p class="note" style="margin:10px 0 0">Aim for <b>~14–18g protein</b> per portion → full recipes on page 2.</p>
     </div>
 
-    <!-- Dinner -->
     <div class="card">
       <h2>🍽️ <span class="lead">Dinner</span> <span class="tag t-accent">batch · eat within 2 days</span></h2>
       <p style="margin:0">For <b>Momo &amp; Rao</b> — pick one protein:</p>
@@ -151,11 +175,10 @@
         <span class="p">🦑 Squid</span>
         <span class="p">🍗 Chicken</span>
       </div>
-      <p style="margin:0">Add <b>vegetables</b> from the market. Cook one big dish — simple &amp; lightly seasoned, the way we like it.</p>
+      <p style="margin:0">Add <b>vegetables</b> from the market. Easy &amp; quick recipe on page 2.</p>
       <p class="shop"><b>Where to buy:</b><br>🐟 Fish market — squid &amp; shrimp (cash) &nbsp;·&nbsp; 🥬 Street market — vegetables (cash) &nbsp;·&nbsp; 🛍️ Donki — chicken breast</p>
     </div>
 
-    <!-- First week -->
     <div class="card span">
       <h2>📅 <span class="lead">The first week</span> <span class="tag t-blue">start small, ramp up</span></h2>
       <div class="week">
@@ -179,6 +202,111 @@
   <div class="foot">
     📖 Full guide &amp; all recipes (breakfast + lunch/dinner) → <b>momokoashi.github.io/home-helper-guide</b>
   </div>
+
+</div>
+
+<!-- ============ PAGE 2 — THE RECIPES ============ -->
+<div class="page">
+
+  <div class="head">
+    <div>
+      <h1>🍳 This Week's Recipes</h1>
+      <p>The three to start with. Make extra so there's always something ready.</p>
+    </div>
+    <div class="when">Breakfast<br>~14–18g protein</div>
+  </div>
+
+  <div class="protein-tip">
+    💪 <b>Hitting ~14–18g protein per breakfast portion:</b> the main protein comes from <b>our soy protein powder</b> — use about <b>1 scoop per portion</b> and check the tub's label so each serving lands around 14–18g. Tip: use <b>soy milk</b> (not oat milk) — it has more protein.
+  </div>
+
+  <div class="rgrid">
+
+    <!-- Overnight Oats -->
+    <div class="rcard">
+      <h3>🥣 Overnight Oats</h3>
+      <div class="badges">
+        <span class="b b-p">~14–18g protein / portion</span>
+        <span class="b b-t">5 min + chill</span>
+        <span class="b b-s">makes 4 · keeps 3–4 days</span>
+      </div>
+      <h4>Ingredients (4 portions)</h4>
+      <ul>
+        <li>1½ cups rolled oats</li>
+        <li><b>4 scoops our soy protein</b> (1 per portion)</li>
+        <li>2½ cups <b>soy milk</b></li>
+        <li>4 tbsp chia seeds</li>
+        <li>Fruit to top (banana, berries)</li>
+      </ul>
+      <h4>Steps</h4>
+      <ol>
+        <li>Mix oats, soy protein, chia &amp; soy milk in a bowl until no lumps.</li>
+        <li>Divide into <b>4 jars</b>, cover, chill overnight (4–5 hrs+).</li>
+        <li>Each morning: stir, add a splash of milk if thick, top with fruit.</li>
+      </ol>
+    </div>
+
+    <!-- Soy Protein Jelly -->
+    <div class="rcard">
+      <h3>🫛 Soy Protein Jelly (pudding)</h3>
+      <div class="badges">
+        <span class="b b-p">~14–18g protein / portion</span>
+        <span class="b b-t">10 min + set</span>
+        <span class="b b-s">makes 4 · keeps 3–4 days</span>
+      </div>
+      <h4>Ingredients (4 cups)</h4>
+      <ul>
+        <li>2½ cups <b>soy milk</b></li>
+        <li><b>4 scoops our soy protein</b> (1 per portion)</li>
+        <li>1 packet gelatin (or 1 tsp agar for vegan)</li>
+        <li>Optional: a little honey/vanilla, fruit on top</li>
+      </ul>
+      <h4>Steps</h4>
+      <ol>
+        <li>Warm half the soy milk (don't boil); whisk in the gelatin until dissolved.</li>
+        <li>Whisk the soy protein into the cool half until smooth, then combine.</li>
+        <li>Pour into <b>4 cups</b>, chill 2 hrs+ until set. Top with fruit.</li>
+      </ol>
+    </div>
+
+    <!-- Quick Dinner -->
+    <div class="rcard span">
+      <h3>🦐 Easy &amp; Quick Dinner — Garlic-Lemon Shrimp Stir-Fry</h3>
+      <div class="badges">
+        <span class="b b-p">~22–25g protein / portion</span>
+        <span class="b b-t">~15 min</span>
+        <span class="b b-s">scale up to batch for 2 days</span>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1.4fr; gap:18px">
+        <div>
+          <h4>Ingredients (2 portions)</h4>
+          <ul>
+            <li>Shrimp, peeled (fish market)</li>
+            <li>Garlic + ginger</li>
+            <li>Bell pepper + snow peas (or any market veg)</li>
+            <li>Olive oil, lemon, pinch of chili flakes, a little salt</li>
+            <li>Serve with rice</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Steps</h4>
+          <ol>
+            <li>Heat oil; add garlic &amp; ginger, then the vegetables — stir-fry 2–3 min.</li>
+            <li>Add the shrimp and cook just <b>2–3 min</b> until pink (don't overcook — they turn rubbery).</li>
+            <li>Finish with lemon juice &amp; chili. Serve over rice. To batch: just double or triple it.</li>
+          </ol>
+          <p class="src">📖 Reference: Clean Food Crush — Healthy Shrimp Recipes (cleanfoodcrush.com)</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="foot">
+    🧂 Lightly seasoned, the way we like it &nbsp;·&nbsp; more recipe options at <b>momokoashi.github.io/home-helper-guide</b>
+  </div>
+
+</div>
 
 </body>
 </html>
