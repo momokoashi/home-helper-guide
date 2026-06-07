@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Helper Quick-Start</title>
+<style>
+  @page { size: A4; margin: 0; }
+  *{ box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  :root{
+    --ink:#2b2b28; --muted:#6f6f66; --line:#e7e3d8;
+    --green:#5b7a5b; --green-d:#4a674a; --green-soft:#e8efe6;
+    --accent:#c4794a; --accent-soft:#f6e9df;
+    --blue:#3f6b87; --blue-soft:#e6eef3;
+    --amber:#9a6b16; --amber-soft:#fbe9c9;
+  }
+  html,body{margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink); width:210mm; height:297mm; padding:14mm 13mm 11mm;
+    background:#faf9f5; font-size:13px; line-height:1.5;
+    display:flex; flex-direction:column;
+  }
+
+  /* Header */
+  .head{
+    background:linear-gradient(135deg,var(--green),var(--green-d));
+    color:#fff; border-radius:16px; padding:20px 24px; display:flex;
+    align-items:center; justify-content:space-between; margin-bottom:16px;
+  }
+  .head h1{margin:0; font-size:28px; letter-spacing:.2px}
+  .head p{margin:5px 0 0; font-size:13px; opacity:.92}
+  .head .when{
+    text-align:center; font-size:13px; font-weight:800; background:rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.3); padding:10px 16px; border-radius:999px; white-space:nowrap;
+  }
+
+  /* rhythm strip */
+  .rhythm{display:flex; gap:12px; margin-bottom:16px}
+  .rhythm .pill{
+    flex:1; text-align:center; background:#fff; border:1px solid var(--line);
+    border-radius:12px; padding:11px; font-weight:700; font-size:13px; color:var(--ink);
+  }
+  .rhythm .pill span{color:var(--muted); font-weight:600}
+
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; flex:1}
+  .card{border:1px solid var(--line); border-radius:14px; padding:18px 20px; background:#fff;
+    break-inside:avoid; display:flex; flex-direction:column}
+  .card.span{grid-column:1 / -1}
+  .card h2{
+    margin:0 0 12px; font-size:17px; display:flex; align-items:center; gap:9px;
+    padding-bottom:10px; border-bottom:1px solid var(--line);
+  }
+  .card h2 .lead{font-weight:800}
+  .card h2 .hint{margin-left:auto; font-size:11px; font-weight:700; color:var(--muted)}
+
+  ol,ul{margin:0; padding-left:20px}
+  li{margin:8px 0}
+  .tag{display:inline-block; font-size:10.5px; font-weight:800; padding:3px 10px; border-radius:999px; vertical-align:middle}
+  .t-green{background:var(--green-soft); color:var(--green)}
+  .t-accent{background:var(--accent-soft); color:var(--accent)}
+  .t-blue{background:var(--blue-soft); color:var(--blue)}
+  .t-amber{background:var(--amber-soft); color:var(--amber)}
+
+  .mini{margin-top:4px; display:flex; flex-direction:column; gap:12px; justify-content:center; flex:1}
+  .mini .r{padding:13px 15px; background:var(--green-soft); border-radius:11px; line-height:1.5}
+  .mini .r .nm{display:block; font-weight:800; color:var(--green-d); font-size:14px; margin-bottom:3px}
+
+  .pick{display:flex; gap:10px; margin:14px 0}
+  .pick .p{flex:1; text-align:center; background:var(--accent-soft); color:var(--accent);
+    font-weight:800; padding:14px 6px; border-radius:11px; font-size:14px}
+  .shop{font-size:11.5px; color:var(--muted); margin-top:auto; padding-top:12px; line-height:1.7}
+  .shop b{color:var(--ink)}
+  .note{font-style:italic; color:var(--muted)}
+  .pad{margin-top:auto}
+
+  /* First week timeline */
+  .week{display:flex; gap:12px; margin-top:4px}
+  .step{flex:1; background:var(--blue-soft); border-radius:12px; padding:14px 16px}
+  .step .d{font-weight:800; color:var(--blue); font-size:13.5px; margin-bottom:5px}
+  .step.alt{background:var(--green-soft)} .step.alt .d{color:var(--green)}
+  .step.note{background:var(--accent-soft)} .step.note .d{color:var(--accent)}
+
+  .foot{
+    margin-top:16px; text-align:center; font-size:12.5px; color:var(--muted);
+    background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px;
+  }
+  .foot b{color:var(--green-d)}
+</style>
+</head>
+<body>
+
+  <div class="head">
+    <div>
+      <h1>🌿 Helper Quick-Start</h1>
+      <p>The simple version — just the essentials to begin. If anything's unclear, just ask 🙂</p>
+    </div>
+    <div class="when">▶ Start<br>June 12</div>
+  </div>
+
+  <div class="rhythm">
+    <div class="pill">☕ Cold brew <span>· every day</span></div>
+    <div class="pill">🧹 Basic clean <span>· tidy + laundry</span></div>
+    <div class="pill">🍳 Cook <span>· batch &amp; freeze</span></div>
+  </div>
+
+  <div class="grid">
+
+    <!-- Cold brew -->
+    <div class="card">
+      <h2>☕ <span class="lead">Cold Brew</span> <span class="tag t-amber">every day</span> <span class="hint">ready in ~12 hrs</span></h2>
+      <ol>
+        <li>Add <b>coffee grounds + cold water</b> to the jug (about 1 part coffee to 8 parts water).</li>
+        <li>Stir, cover, and <b>leave it ~12 hours</b> — overnight is perfect.</li>
+        <li>Strain out the grounds — <b>ready to pour</b>. Keep in the fridge and make a fresh batch each day.</li>
+      </ol>
+    </div>
+
+    <!-- Cleaning -->
+    <div class="card">
+      <h2>🧹 <span class="lead">Cleaning</span> <span class="tag t-green">keep it basic</span></h2>
+      <ul>
+        <li>Tidy anything lying around — put things back in their place.</li>
+        <li>Make the bed (quick is totally fine).</li>
+        <li>Do the <b>laundry</b> → hang it <b>outside</b> to dry.</li>
+        <li>The next day: bring it in &amp; fold.</li>
+      </ul>
+      <p class="note pad">That's it — nothing heavy 🙂</p>
+    </div>
+
+    <!-- Breakfast -->
+    <div class="card">
+      <h2>🌅 <span class="lead">Breakfast</span> <span class="tag t-green">batch &amp; freeze</span> <span class="hint">a few portions</span></h2>
+      <div class="mini">
+        <div class="r">
+          <span class="nm">① Overnight Oats</span>
+          Rolled oats + <b>our soy protein</b> + soy/oat milk + chia. Mix, divide into jars, chill overnight. Top with fruit.
+        </div>
+        <div class="r">
+          <span class="nm">② Soy Protein Pudding (jelly)</span>
+          Soy milk + <b>our soy protein</b> + a little gelatin. Whisk smooth, pour into cups, chill until set.
+        </div>
+      </div>
+    </div>
+
+    <!-- Dinner -->
+    <div class="card">
+      <h2>🍽️ <span class="lead">Dinner</span> <span class="tag t-accent">batch · eat within 2 days</span></h2>
+      <p style="margin:0">For <b>Momo &amp; Rao</b> — pick one protein:</p>
+      <div class="pick">
+        <span class="p">🦐 Shrimp</span>
+        <span class="p">🦑 Squid</span>
+        <span class="p">🍗 Chicken</span>
+      </div>
+      <p style="margin:0">Add <b>vegetables</b> from the market. Cook one big dish — simple &amp; lightly seasoned, the way we like it.</p>
+      <p class="shop"><b>Where to buy:</b><br>🐟 Fish market — squid &amp; shrimp (cash) &nbsp;·&nbsp; 🥬 Street market — vegetables (cash) &nbsp;·&nbsp; 🛍️ Donki — chicken breast</p>
+    </div>
+
+    <!-- First week -->
+    <div class="card span">
+      <h2>📅 <span class="lead">The first week</span> <span class="tag t-blue">start small, ramp up</span></h2>
+      <div class="week">
+        <div class="step">
+          <div class="d">▶ June 12 — Day 1</div>
+          Start with just <b>1 dish</b>. No pressure to do more than that.
+        </div>
+        <div class="step alt">
+          <div class="d">If it feels easy — make 2</div>
+          <b>1 breakfast</b> to last the next ~3 days + <b>1 dinner</b> to last the next ~2 days.
+        </div>
+        <div class="step note">
+          <div class="d">Then…</div>
+          We'll review together and <b>take it from there</b> 🌱
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="foot">
+    📖 Full guide &amp; all recipes (breakfast + lunch/dinner) → <b>momokoashi.github.io/home-helper-guide</b>
+  </div>
+
+</body>
+</html>
