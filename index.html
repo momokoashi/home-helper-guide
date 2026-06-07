@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Home Helper Guide</title>
+<style>
+  :root{
+    --bg:#f6f4ee;
+    --card:#ffffff;
+    --ink:#2b2b28;
+    --muted:#6f6f66;
+    --line:#e7e3d8;
+    --green:#5b7a5b;
+    --green-soft:#e8efe6;
+    --accent:#c4794a;
+    --accent-soft:#f6e9df;
+    --blue:#3f6b87;
+    --blue-soft:#e6eef3;
+    --radius:16px;
+    --shadow:0 1px 3px rgba(0,0,0,.06),0 6px 18px rgba(0,0,0,.04);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.55;font-size:17px;
+    padding-bottom:60px;
+  }
+  .wrap{max-width:780px;margin:0 auto;padding:0 16px}
+
+  /* Header */
+  header{
+    background:linear-gradient(160deg,#5b7a5b,#4a674a);
+    color:#fff;padding:26px 0 22px;text-align:center;
+  }
+  header h1{margin:0;font-size:26px;letter-spacing:.3px}
+  header p{margin:6px 0 0;opacity:.92;font-size:15.5px}
+
+  .rhythm{display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+  .rhythm .pill{
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);
+    padding:8px 13px;border-radius:999px;font-size:13.5px;font-weight:600;
+  }
+
+  /* Tabs */
+  .tabs{
+    position:sticky;top:0;z-index:20;background:var(--bg);
+    display:flex;gap:8px;padding:12px 16px;max-width:780px;margin:0 auto;
+    border-bottom:1px solid var(--line);
+  }
+  .tab{
+    flex:1;text-align:center;padding:12px;border-radius:12px;border:1px solid var(--line);
+    background:var(--card);font-weight:700;font-size:15.5px;cursor:pointer;color:var(--muted);
+    transition:.15s;user-select:none;
+  }
+  .tab.active{background:var(--green);color:#fff;border-color:var(--green)}
+
+  .panel{display:none;padding-top:20px}
+  .panel.active{display:block}
+
+  /* Cards */
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px 18px 16px;margin:0 0 16px;box-shadow:var(--shadow);
+  }
+  .card h2{margin:0 0 4px;font-size:19px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .card .sub{color:var(--muted);font-size:14px;margin:0 0 14px}
+
+  /* Soft list (tap to check, but gentle) */
+  ul.check{list-style:none;margin:0;padding:0}
+  ul.check li{
+    display:flex;align-items:flex-start;gap:12px;padding:11px 4px;border-bottom:1px solid var(--line);
+  }
+  ul.check li:last-child{border-bottom:none}
+  ul.check input{
+    appearance:none;-webkit-appearance:none;min-width:24px;height:24px;margin-top:1px;
+    border:2px solid var(--green);border-radius:7px;cursor:pointer;position:relative;background:#fff;
+  }
+  ul.check input:checked{background:var(--green)}
+  ul.check input:checked::after{
+    content:"";position:absolute;left:7px;top:3px;width:6px;height:11px;
+    border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg);
+  }
+  ul.check label{cursor:pointer;flex:1}
+  ul.check input:checked + label{color:var(--muted)}
+  .reset{
+    margin-top:12px;background:none;border:1px solid var(--line);color:var(--muted);
+    padding:8px 14px;border-radius:10px;font-size:13.5px;cursor:pointer;font-weight:600;
+  }
+
+  ul.dot{margin:8px 0 0;padding-left:20px}
+  ul.dot li{margin:6px 0}
+
+  /* Shopping */
+  .buy{display:grid;grid-template-columns:1fr;gap:10px;margin-top:6px}
+  .buy .row{
+    display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);
+    border-radius:12px;background:#fbfaf6;
+  }
+  .buy .where{font-weight:800;color:var(--green);min-width:118px}
+  .buy .what{flex:1;font-size:15px}
+  .buy .pay{font-size:12px;font-weight:700;padding:4px 9px;border-radius:999px;white-space:nowrap}
+  .pay.cash{background:#fbe9c9;color:#9a6b16}
+  .pay.card{background:var(--blue-soft);color:var(--blue)}
+
+  .callout{
+    background:var(--accent-soft);border:1px solid #eed6c4;border-radius:12px;
+    padding:13px 15px;margin-top:14px;font-size:14.5px;
+  }
+  .callout b{color:var(--accent)}
+  .callout.blue{background:var(--blue-soft);border-color:#d3e2eb}
+  .callout.blue b{color:var(--blue)}
+  .callout.green{background:var(--green-soft);border-color:#d6e3d2}
+  .callout.green b{color:var(--green)}
+
+  /* Recipe meal nav */
+  .meal-nav{display:flex;gap:8px;margin:0 0 16px;flex-wrap:wrap}
+  .meal-nav button{
+    flex:1;min-width:120px;padding:11px;border-radius:11px;border:1px solid var(--line);
+    background:var(--card);font-weight:700;font-size:14.5px;cursor:pointer;color:var(--muted);
+  }
+  .meal-nav button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .meal-group{display:none}
+  .meal-group.active{display:block}
+
+  .recipe h3{margin:0 0 2px;font-size:18px}
+  .recipe .meta{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}
+  .chip{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:#f0ede4;color:var(--muted)}
+  .chip.p{background:var(--green-soft);color:var(--green)}
+  .chip.t{background:var(--accent-soft);color:var(--accent)}
+  .chip.s{background:var(--blue-soft);color:var(--blue)}
+  .recipe h4{margin:14px 0 4px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
+  .recipe ol{margin:6px 0 0;padding-left:20px}
+  .recipe ol li{margin:7px 0}
+  .recipe ul{margin:6px 0 0;padding-left:20px}
+  .recipe ul li{margin:4px 0}
+  .src{font-size:13px;margin-top:12px}
+  .src a{color:var(--blue);word-break:break-word}
+  .note{font-size:13.5px;color:var(--muted);font-style:italic;margin-top:8px}
+
+  .level{display:flex;gap:10px;margin-top:6px;flex-wrap:wrap}
+  .level .lv{flex:1;min-width:150px;border:1px solid var(--line);border-radius:12px;padding:12px;background:#fbfaf6}
+  .level .lv b{display:block;margin-bottom:4px}
+
+  footer{text-align:center;color:var(--muted);font-size:13px;margin:26px 0 10px}
+  .print-btn{
+    display:inline-block;margin:6px auto 0;background:var(--green);color:#fff;border:none;
+    padding:11px 20px;border-radius:11px;font-weight:700;font-size:14.5px;cursor:pointer;
+  }
+
+  @media (min-width:620px){ .buy{grid-template-columns:1fr 1fr} }
+
+  @media print{
+    .tabs,.meal-nav,.reset,.print-btn{display:none!important}
+    .panel,.meal-group{display:block!important}
+    body{background:#fff;padding:0;font-size:13px}
+    .card{box-shadow:none;break-inside:avoid;page-break-inside:avoid}
+    header{background:#4a674a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>🏡 Home Helper Guide</h1>
+    <p>A quick guide on how to help us 🙂</p>
+    <div class="rhythm">
+      <span class="pill">💪 Protein-rich</span>
+      <span class="pill">🧂 Lightly seasoned</span>
+      <span class="pill">🫙 Cook extra to last a few days</span>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tab active" data-tab="info">📋 General Info</div>
+  <div class="tab" data-tab="recipes">🍳 Recipes</div>
+</nav>
+
+<div class="wrap">
+
+  <!-- ========== GENERAL INFO ========== -->
+  <section id="info" class="panel active">
+
+    <div class="card">
+      <h2>☀️ How the day works</h2>
+      <ul class="dot">
+        <li><b>Tidy up</b> a little — dishes, surfaces, laundry.</li>
+        <li><b>Cook the meals</b> (about 1–1.5 hours) — and make a few <b>extra portions</b> to last a few days.</li>
+        <li><b>Shop</b> if we're missing anything — keep the receipt.</li>
+      </ul>
+      <div class="callout green">
+        <b>The goal:</b> healthy, <b>protein-rich</b> meals that are <b>lightly seasoned</b>. We love to <b>batch-make</b> a little extra so there's always something ready. <b>Fresh and simple is always best.</b>
+      </div>
+    </div>
+
+    <!-- Tidy & cleaning (laundry merged in) -->
+    <div class="card">
+      <h2>🧹 Tidy &amp; cleaning</h2>
+      <p class="sub">A few simple things — tap them off as you go. If anything's unclear, just ask 🙂</p>
+      <ul class="check" data-key="clean">
+        <li><input type="checkbox" id="c1"><label for="c1">Wash up any used dishes</label></li>
+        <li><input type="checkbox" id="c2"><label for="c2">Tidy up — put things back, clear the surfaces</label></li>
+        <li><input type="checkbox" id="c3"><label for="c3">Do the laundry, then hang it <b>outside</b> to dry</label></li>
+        <li><input type="checkbox" id="c4"><label for="c4">The next day — bring the laundry in, fold it, and put it away</label></li>
+      </ul>
+      <button class="reset" data-reset="clean">↺ Start fresh</button>
+      <p class="note">No need to change bed sheets or towels.</p>
+    </div>
+
+    <!-- Nice to have -->
+    <div class="card">
+      <h2>✨ Nice to have (only if there's time)</h2>
+      <p class="sub">Totally optional — lovely if you get to it, no worries if not.</p>
+      <ul class="check" data-key="extra">
+        <li><input type="checkbox" id="e1"><label for="e1">Wipe inside the fridge</label></li>
+        <li><input type="checkbox" id="e2"><label for="e2">Tidy / wipe the cupboards</label></li>
+        <li><input type="checkbox" id="e3"><label for="e3">Tidy / wipe the wardrobe (where we keep all the clothing)</label></li>
+      </ul>
+      <button class="reset" data-reset="extra">↺ Start fresh</button>
+    </div>
+
+    <!-- Shopping -->
+    <div class="card">
+      <h2>🛒 Where to buy ingredients</h2>
+      <p class="sub">Each item has its own shop. Please <b>keep every receipt</b>.</p>
+      <div class="buy">
+        <div class="row">
+          <span class="where">🐟 Fish market<br><small style="font-weight:500;color:var(--muted)">(next door)</small></span>
+          <span class="what">All fish, <b>squid</b>, <b>shrimp</b></span>
+          <span class="pay cash">CASH</span>
+        </div>
+        <div class="row">
+          <span class="where">🥬 Street market<br><small style="font-weight:500;color:var(--muted)">(next door)</small></span>
+          <span class="what">All <b>vegetables</b> &amp; fresh produce</span>
+          <span class="pay cash">CASH</span>
+        </div>
+        <div class="row">
+          <span class="where">🛍️ Donki<br><small style="font-weight:500;color:var(--muted)">(Don Quijote)</small></span>
+          <span class="what"><b>Chicken breast</b> &amp; pantry items</span>
+          <span class="pay card">CARD/RECEIPT</span>
+        </div>
+        <div class="row">
+          <span class="where">🥛 At home</span>
+          <span class="what">Our <b>soy protein powder</b> (from Japan) — use this one, no need to buy</span>
+          <span class="pay" style="background:#eee;color:#666">PROVIDED</span>
+        </div>
+      </div>
+      <div class="callout">
+        💵 <b>Cash:</b> The fish &amp; vegetable markets are cash only. If you don't have cash, I can give it to you in advance — just let me know.
+      </div>
+      <div class="callout blue">
+        🧾 <b>Receipts:</b> After shopping, <b>send me a photo of the receipt</b> and I'll send the money back to you.
+      </div>
+    </div>
+
+    <!-- Protein sources -->
+    <div class="card">
+      <h2>💪 Our protein sources</h2>
+      <p class="sub">These are the proteins we love — build meals around them.</p>
+      <div class="buy">
+        <div class="row"><span class="where">🦑 Squid</span><span class="what">From the fish market</span></div>
+        <div class="row"><span class="where">🦐 Shrimp</span><span class="what">From the fish market</span></div>
+        <div class="row"><span class="where">🍗 Chicken breast</span><span class="what">From Donki</span></div>
+        <div class="row"><span class="where">🫛 Soy protein</span><span class="what">Our powder from Japan (at home)</span></div>
+      </div>
+    </div>
+
+    <!-- MyFitnessPal -->
+    <div class="card">
+      <h2>📊 MyFitnessPal — let's keep it simple</h2>
+      <p class="sub">Just try it for now 🙂 We'll look at it together later and adjust.</p>
+      <ol style="padding-left:20px;margin:6px 0 0">
+        <li><b>Download the MyFitnessPal app</b> (free) on your phone.</li>
+        <li>I'll show you how to <b>add a meal</b> the first time.</li>
+        <li>Log the <b>whole meal</b> — protein, oils, vegetables, grains… everything that went in.</li>
+      </ol>
+      <div class="callout green">
+        🍽️ <b>Track everything.</b> Add each ingredient you used so the totals are accurate — protein, oils, vegetables and all.
+      </div>
+      <div class="callout blue">
+        <b>How to add a meal (quick):</b>
+        <ol style="margin:8px 0 0;padding-left:20px">
+          <li>Open the app → tap the <b>＋</b> → <b>Add Food</b>.</li>
+          <li>Pick the meal (Breakfast / Lunch / Dinner).</li>
+          <li>Search the protein (e.g. "chicken breast") and type the amount in grams.</li>
+          <li>Add the oil you used (e.g. "olive oil, 1 tbsp").</li>
+          <li>Add the vegetables, grains and anything else in the meal, then save 🙂</li>
+        </ol>
+      </div>
+      <p class="note">It's the first time — please don't worry about being perfect. Just give it a try and we'll figure it out together.</p>
+    </div>
+
+  </section>
+
+  <!-- ========== RECIPES ========== -->
+  <section id="recipes" class="panel">
+
+    <div class="card" style="background:var(--green-soft);border-color:#d6e3d2">
+      <h2>🍳 Recipe ideas</h2>
+      <p class="sub" style="margin-bottom:8px">These are just ideas to choose from — <b>you can make any of them, or cook your own</b>. Just keep it <b>protein-rich</b> and <b>lightly seasoned</b>, and make a little extra. If anything's unclear, just ask 🙂</p>
+      <div class="callout">🌱 <b>To start:</b> let's keep it easy — focus on just <b>1–2 dishes (mainly breakfast)</b> for now, and we'll ramp up together from there.</div>
+    </div>
+
+    <div class="card" style="background:#fbfaf6">
+      <h2>🫙 The batch-cooking idea</h2>
+      <p class="sub">Cook once, eat for a few days.</p>
+      <ul class="dot">
+        <li><b>Breakfast:</b> make <b>3–4 portions (+ a little extra)</b> so it's ready to grab.</li>
+        <li><b>Lunch &amp; dinner:</b> make a couple of dishes in bigger batches to eat over <b>2–3 days</b>.</li>
+        <li><b>Chicken</b> keeps well (~4 days in the fridge, and freezes) — great for big batches.</li>
+        <li><b>Squid &amp; shrimp</b> are best fresh — cook smaller amounts and eat within <b>1–2 days</b>.</li>
+        <li>We have an <b>oven</b> — perfect for easy hands-off batches (tray bakes, baked oats).</li>
+        <li>Whenever the cleaning is lighter, that's a great time to batch-cook extra.</li>
+      </ul>
+    </div>
+
+    <div class="meal-nav">
+      <button class="active" data-meal="breakfast">🌅 Breakfast</button>
+      <button data-meal="mains">🍽️ Lunch &amp; Dinner</button>
+    </div>
+
+    <!-- BREAKFAST -->
+    <div class="meal-group active" id="breakfast">
+
+      <div class="card recipe">
+        <h3>🫛 Soy Protein Milk Jelly (pudding-style)</h3>
+        <div class="meta">
+          <span class="chip p">~18–20g protein</span>
+          <span class="chip t">10 min + set</span>
+          <span class="chip s">keeps 3–4 days</span>
+        </div>
+        <h4>You need (makes ~4 cups)</h4>
+        <ul>
+          <li>2 cups (500 ml) soy milk</li>
+          <li>2–3 scoops <b>our soy protein powder</b></li>
+          <li>1 packet unflavoured gelatin OR 1 tsp agar powder</li>
+          <li>Optional: a little honey or vanilla, fresh fruit on top</li>
+        </ul>
+        <h4>Steps</h4>
+        <ol>
+          <li>Warm half the soy milk (do not boil). Sprinkle the gelatin/agar over it and whisk until fully dissolved.</li>
+          <li>Whisk the soy protein powder into the cool half until smooth and lump-free.</li>
+          <li>Combine, add honey/vanilla if using, and pour into <b>4 small cups</b>.</li>
+          <li>Chill at least 2 hours or overnight until set like a soft jelly.</li>
+          <li>Top with fruit before serving. Keep covered in the fridge.</li>
+        </ol>
+        <p class="src">📖 Reference: <a href="https://greenlitebites.com/protein-jello-my-new-favorite-post-workout-breakfast/" target="_blank" rel="noopener">GreenLiteBites — Protein Jello</a> · <a href="https://www.haylskitchen.com/best-protein-pudding/" target="_blank" rel="noopener">Hayl's Kitchen — Protein Pudding</a></p>
+      </div>
+
+      <div class="card recipe">
+        <h3>🥣 High-Protein Overnight Oats</h3>
+        <div class="meta">
+          <span class="chip p">~30g protein</span>
+          <span class="chip t">5 min + set</span>
+          <span class="chip s">keeps 3–4 days</span>
+        </div>
+        <h4>You need (makes ~4 jars)</h4>
+        <ul>
+          <li>2 cups rolled oats (old-fashioned, not instant)</li>
+          <li>4 scoops <b>our soy protein powder</b></li>
+          <li>3 cups soy milk or oat milk</li>
+          <li>4 tbsp chia seeds</li>
+          <li>Fruit to top: banana, berries</li>
+        </ul>
+        <h4>Steps</h4>
+        <ol>
+          <li>Mix oats, protein powder, chia seeds and milk in a big bowl until no lumps remain.</li>
+          <li>Divide into <b>4 jars</b>, cover, and refrigerate overnight (at least 4–5 hours).</li>
+          <li>Each morning, stir, add a splash of milk if thick, and top with fruit.</li>
+        </ol>
+        <p class="src">📖 Reference: <a href="https://therealfooddietitians.com/protein-overnight-oats/" target="_blank" rel="noopener">The Real Food Dietitians — Protein Overnight Oats</a></p>
+      </div>
+
+      <div class="card recipe">
+        <h3>🧁 Baked Protein Oatmeal Cups <span style="font-size:12px;color:var(--accent)">(oven · best for batching)</span></h3>
+        <div class="meta">
+          <span class="chip p">~12–15g protein each</span>
+          <span class="chip t">30 min</span>
+          <span class="chip s">keeps ~1 week · freezes</span>
+        </div>
+        <h4>You need (makes ~10 cups)</h4>
+        <ul>
+          <li>3 cups rolled oats</li>
+          <li>3 scoops <b>our soy protein powder</b></li>
+          <li>2 ripe bananas, mashed</li>
+          <li>2 eggs · 2 cups soy/oat milk · 1 tsp baking powder</li>
+          <li>Optional: berries, a little honey, cinnamon</li>
+        </ul>
+        <h4>Steps</h4>
+        <ol>
+          <li>Heat the oven to 180°C / 350°F. Line a muffin tray.</li>
+          <li>Mix everything in a bowl until combined.</li>
+          <li>Spoon into the muffin cups and bake ~20–25 min until set and golden.</li>
+          <li>Cool, then store in the fridge (1 week) or freezer. Grab-and-go breakfast.</li>
+        </ol>
+        <p class="note">Great use of the oven — make a big batch once and they last all week.</p>
+      </div>
+
+      <div class="card recipe">
+        <h3>🍰 Protein Banana Breakfast Cake <span style="font-size:12px;color:var(--accent)">(oven · best for batching)</span></h3>
+        <div class="meta">
+          <span class="chip p">~12–15g protein / slice</span>
+          <span class="chip t">35 min</span>
+          <span class="chip s">keeps ~4–5 days · freezes</span>
+        </div>
+        <h4>You need (makes ~8 slices)</h4>
+        <ul>
+          <li>2 ripe bananas, mashed</li>
+          <li>2 eggs · ½ cup soy/oat milk</li>
+          <li>2–3 scoops <b>our soy protein powder</b></li>
+          <li>1½ cups oat flour (or blend rolled oats into flour)</li>
+          <li>1 tsp baking powder · 1 tsp cinnamon</li>
+          <li>Optional: a little honey, berries, or dark chocolate chips</li>
+        </ul>
+        <h4>Steps</h4>
+        <ol>
+          <li>Heat the oven to 180°C / 350°F and line a loaf or cake tin.</li>
+          <li>Whisk the mashed banana, eggs, milk (and honey if using) until smooth.</li>
+          <li>Stir in the protein powder, oat flour, baking powder and cinnamon until just combined.</li>
+          <li>Pour into the tin, add berries/chips on top, and bake ~25–30 min until a skewer comes out clean.</li>
+          <li>Cool, then slice. Store in the fridge (~4–5 days) or freeze slices — a grab-and-go breakfast.</li>
+        </ol>
+        <p class="src">📖 Reference: <a href="https://unboundwellness.com/banana-protein-breakfast-cake/" target="_blank" rel="noopener">Unbound Wellness — Banana Protein Breakfast Cake</a> · <a href="https://chocolatecoveredkatie.com/protein-banana-bread/" target="_blank" rel="noopener">Chocolate Covered Katie — Protein Banana Bread</a></p>
+      </div>
+
+      <div class="card recipe">
+        <h3>🍌 Warm Protein Oatmeal <span style="font-size:12px;color:var(--muted)">(fresh, for variety)</span></h3>
+        <div class="meta">
+          <span class="chip p">~25g protein</span>
+          <span class="chip t">10 min</span>
+          <span class="chip s">made fresh</span>
+        </div>
+        <h4>You need (1 portion)</h4>
+        <ul>
+          <li>½ cup rolled oats + 1 cup water or soy milk</li>
+          <li>1 scoop <b>our soy protein powder</b></li>
+          <li>½ banana, mashed · 1 tsp peanut butter (optional)</li>
+        </ul>
+        <h4>Steps</h4>
+        <ol>
+          <li>Cook the oats with water/milk for ~5 minutes until soft.</li>
+          <li>Take off the heat, let it cool 1 minute, then stir in the protein powder (so it stays creamy, not grainy).</li>
+          <li>Stir in banana, top with peanut butter or fruit, serve warm.</li>
+        </ol>
+      </div>
+
+    </div>
+
+    <!-- LUNCH & DINNER -->
+    <div class="meal-group" id="mains">
+
+      <div class="card recipe">
+        <h3>🍗 Oven Tray-Bake: Garlic-Lemon Chicken &amp; Roasted Veg <span style="font-size:12px;color:var(--accent)">(oven · best for batching)</span></h3>
+        <div class="meta">
+          <span class="chip p">~40g protein</span>
+          <span class="chip t">35 min</span>
+          <span class="chip s">keeps ~4 days · freezes</span>
+        </div>
+        <h4>You need</h4>
+        <ul>
+          <li>4–6 chicken breasts (Donki)</li>
+          <li>Vegetables that roast well: peppers, broccoli, carrots, zucchini (street market)</li>
+          <li>Olive oil, lots of garlic, lemon, black pepper, mixed herbs, a little salt to taste</li>
+        </ul>
+        <h4>Steps</h4>
+        <ol>
+          <li>Heat the oven to 200°C / 400°F.</li>
+          <li>Toss chicken and chopped vegetables on a tray with olive oil, garlic, herbs, pepper and lemon.</li>
+          <li>Bake ~25 min until the chicken is cooked through (no pink inside).</li>
+          <li>Cool, then divide into containers. Eat over ~4 days, or freeze portions.</li>
+        </ol>
+        <p class="src">📖 Reference: <a href="https://beatthebudget.com/recipe/best-chicken-meal-prep/" target="_blank" rel="noopener">Beat The Budget — High Protein Chicken Meal Prep</a></p>
+      </div>
+
+      <div class="card recipe">
+        <h3>🌿 Lemon-Herb Baked Chicken with Rice</h3>
+        <div class="meta">
+          <span class="chip p">~35g protein</span>
+          <span class="chip t">25 min</span>
+          <span class="chip s">keeps ~4 days</span>
+        </div>
+        <h4>You need</h4>
+        <ul>
+          <li>4 chicken breasts (Donki)</li>
+          <li>Rice (brown rice is great), cooked</li>
+          <li>Lemon, garlic, mixed herbs, olive oil, black pepper, a little salt to taste</li>
+          <li>A side of steamed greens</li>
+        </ul>
+        <h4>Steps</h4>
+        <ol>
+          <li>Marinate the chicken in lemon, garlic, herbs &amp; a little olive oil (10 min if there's time).</li>
+          <li>Bake at 200°C / 400°F until cooked through and juicy.</li>
+          <li>Rest 3 min, slice, and pack with rice + greens. Light and not salty.</li>
+        </ol>
+        <p class="src">📖 Reference: <a href="https://www.nourishmovelove.com/high-protein-chicken-recipes/" target="_blank" rel="noopener">Nourish Move Love — High Protein Chicken Recipes</a></p>
+      </div>
+
+      <div class="card recipe">
+        <h3>🍯 Honey-Garlic Chicken with Rice</h3>
+        <div class="meta">
+          <span class="chip p">~35g protein</span>
+          <span class="chip t">25 min</span>
+          <span class="chip s">keeps ~4 days</span>
+        </div>
+        <h4>You need</h4>
+        <ul>
+          <li>4 chicken breasts, cubed</li>
+          <li>Rice, cooked</li>
+          <li>Glaze: garlic, 1 tbsp honey, a splash of low-sodium soy sauce, sesame seeds</li>
+        </ul>
+        <h4>Steps</h4>
+        <ol>
+          <li>Pan-cook the chicken cubes in a little oil until golden and cooked through.</li>
+          <li>Add garlic, honey, the soy sauce and sesame seeds; toss 2–3 min until glossy.</li>
+          <li>Serve over rice with a side of vegetables. Pack into containers.</li>
+        </ol>
+        <p class="src">📖 Reference: <a href="https://healthyfitnessmeals.com/honey-garlic-chicken/" target="_blank" rel="noopener">Healthy Fitness Meals — Honey Garlic Chicken</a></p>
+      </div>
+
+      <div class="card recipe">
+        <h3>🦑 Garlic, Chili &amp; Parsley Squid</h3>
+        <div class="meta">
+          <span class="chip p">~18g protein</span>
+          <span class="chip t">15 min</span>
+          <span class="chip s">best fresh · 1–2 days</span>
+        </div>
+        <h4>You need</h4>
+        <ul>
+          <li>Fresh squid, cleaned (fish market)</li>
+          <li>Garlic, fresh red chili, parsley, good olive oil, lemon, a little salt to taste</li>
+        </ul>
+        <h4>Steps</h4>
+        <ol>
+          <li>Pat the squid dry and score lightly (or use rings).</li>
+          <li>Sear in a hot pan with olive oil for <b>1–2 minutes per side only</b> (longer makes it rubbery).</li>
+          <li>Add garlic, chili and parsley for the last 30 seconds.</li>
+          <li>Squeeze lemon over and serve with a green salad or steamed vegetables.</li>
+        </ol>
+        <p class="src">📖 Reference: <a href="https://www.cookedandloved.com/recipes/grilled-squid-with-garlic-chili-parsley/" target="_blank" rel="noopener">Cooked &amp; Loved — Grilled Squid, Garlic, Chili &amp; Parsley</a></p>
+      </div>
+
+      <div class="card recipe">
+        <h3>🥬 Squid &amp; Bok Choy Stir-Fry</h3>
+        <div class="meta">
+          <span class="chip p">~20g protein</span>
+          <span class="chip t">20 min</span>
+          <span class="chip s">best fresh · 1–2 days</span>
+        </div>
+        <h4>You need</h4>
+        <ul>
+          <li>Squid, cleaned &amp; scored (fish market)</li>
+          <li>Bok choy, ginger, garlic, spring onion (street market)</li>
+          <li>A little sesame oil and low-sodium soy sauce (garlic &amp; ginger add flavour too)</li>
+        </ul>
+        <h4>Steps</h4>
+        <ol>
+          <li>Blanch the squid in boiling water for ~30 seconds, then drain.</li>
+          <li>Stir-fry ginger &amp; garlic, add bok choy until just wilted.</li>
+          <li>Return the squid, toss with a little sesame oil and soy sauce for 1 minute, finish with spring onion. Serve hot.</li>
+        </ol>
+        <p class="src">📖 Reference: <a href="https://omnivorescookbook.com/chinese-style-squid-stir-fry/" target="_blank" rel="noopener">Omnivore's Cookbook — Squid &amp; Bok Choy Stir-Fry</a></p>
+      </div>
+
+      <div class="card recipe">
+        <h3>🦐 Garlic-Lemon Shrimp &amp; Vegetable Stir-Fry</h3>
+        <div class="meta">
+          <span class="chip p">~22–25g protein</span>
+          <span class="chip t">15 min</span>
+          <span class="chip s">best fresh · 1–2 days</span>
+        </div>
+        <h4>You need</h4>
+        <ul>
+          <li>Shrimp, peeled (fish market)</li>
+          <li>Snow peas, bell pepper, ginger, garlic (street market)</li>
+          <li>Olive oil, lemon juice, pinch of chili flakes, a little salt to taste</li>
+        </ul>
+        <h4>Steps</h4>
+        <ol>
+          <li>Heat oil, add garlic &amp; ginger, then the vegetables; stir-fry 2–3 min.</li>
+          <li>Add shrimp and cook just <b>2–3 minutes</b> until pink (don't overcook — they turn rubbery).</li>
+          <li>Finish with lemon juice and chili flakes. Serve with rice or on its own.</li>
+        </ol>
+        <p class="src">📖 Reference: <a href="https://cleanfoodcrush.com/healthy-shrimp-recipes/" target="_blank" rel="noopener">Clean Food Crush — Healthy Shrimp Recipes</a></p>
+      </div>
+
+      <div class="card recipe">
+        <h3>🦑 Chilled Squid Salad <span style="font-size:12px;color:var(--muted)">(easy to pack)</span></h3>
+        <div class="meta">
+          <span class="chip p">~18–25g protein</span>
+          <span class="chip t">20 min</span>
+          <span class="chip s">best fresh · 1–2 days</span>
+        </div>
+        <h4>You need</h4>
+        <ul>
+          <li>Fresh squid, cleaned &amp; sliced into rings (fish market)</li>
+          <li>Lemon juice, celery, red onion, parsley, a little olive oil, a little salt to taste</li>
+          <li>Optional: cherry tomatoes, cucumber</li>
+        </ul>
+        <h4>Steps</h4>
+        <ol>
+          <li>Boil the squid rings <b>1–2 minutes only</b>, then drain and cool.</li>
+          <li>Toss with lemon juice, chopped vegetables, parsley and olive oil.</li>
+          <li>Chill before serving — the lemon and a little salt bring it together. Packs well cold.</li>
+        </ol>
+        <p class="src">📖 Reference: <a href="https://www.skinnytaste.com/chilled-calamari-salad-with-lemon-and/" target="_blank" rel="noopener">Skinnytaste — Chilled Calamari Salad</a></p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <footer>
+    Made with care 🤍 · Tap items to check them off — they'll stay saved on this phone.<br>
+    <button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+    <div style="margin-top:10px;opacity:.7">Home Helper Guide · v1.3</div>
+  </footer>
+
+</div>
+
+<script>
+  // ---- Tabs (General Info / Recipes) ----
+  document.querySelectorAll('.tab').forEach(function(t){
+    t.addEventListener('click', function(){
+      document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});
+      document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active')});
+      t.classList.add('active');
+      document.getElementById(t.dataset.tab).classList.add('active');
+      window.scrollTo(0,0);
+    });
+  });
+
+  // ---- Meal sub-nav (Breakfast / Lunch & Dinner) ----
+  document.querySelectorAll('.meal-nav button').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.meal-nav button').forEach(function(x){x.classList.remove('active')});
+      document.querySelectorAll('.meal-group').forEach(function(g){g.classList.remove('active')});
+      b.classList.add('active');
+      document.getElementById(b.dataset.meal).classList.add('active');
+    });
+  });
+
+  // ---- Lists persist on this device ----
+  function loadChecks(){
+    document.querySelectorAll('ul.check').forEach(function(list){
+      var key = 'helper_' + list.dataset.key;
+      var saved = JSON.parse(localStorage.getItem(key) || '{}');
+      list.querySelectorAll('input[type=checkbox]').forEach(function(cb){
+        if(saved[cb.id]) cb.checked = true;
+        cb.addEventListener('change', function(){
+          var cur = JSON.parse(localStorage.getItem(key) || '{}');
+          cur[cb.id] = cb.checked;
+          localStorage.setItem(key, JSON.stringify(cur));
+        });
+      });
+    });
+  }
+  loadChecks();
+
+  document.querySelectorAll('.reset').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var key = 'helper_' + btn.dataset.reset;
+      localStorage.removeItem(key);
+      var list = document.querySelector('ul.check[data-key="'+btn.dataset.reset+'"]');
+      list.querySelectorAll('input[type=checkbox]').forEach(function(cb){cb.checked=false});
+    });
+  });
+</script>
+
+</body>
+</html>
